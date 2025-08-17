@@ -48,14 +48,14 @@ ALU_PROJECT/
 - **ADD/SUB**: Directed tests check normal, carry wrap, and signed overflow cases.  
 - **Logic ops**: AND/OR/XOR tested with representative bit patterns.  
 - **Shifts**: SLL, SRL, SRA tested with positive and negative operands.  
-- All tests pass with Icarus Verilog (`iverilog -g2012`).
+- All tests pass with Icarus Verilog (`iverilog`).
 
 ---
 
 ## How to Run
 1. Compile & run a testbench:
    ```bash
-   iverilog -g2012 -o runs/alu_addsub tb/alu_addsub_tb.v rtl/alu.v
+   iverilog -o runs/alu_addsub tb/alu_addsub_tb.v rtl/alu.v
    vvp runs/alu_addsub
    ```
 2. View waveforms:
