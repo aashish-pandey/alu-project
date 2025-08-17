@@ -17,6 +17,9 @@ module alu #(
     //opcodes (Keeping them stable: extending them later)
     localparam OP_ADD = 4'h0;
     localparam OP_SUB = 4'h1;
+    localparam OP_AND = 4'h2;
+    localparam OP_OR = 4'h3;
+    localparam OP_XOR = 4'h4;
 
     // precompute add/sub results and overflow bits
     wire [WIDTH:0] add_full = {1'b0, a} + {1'b0, b}; //WIDTH+1 to capture the carry-out
@@ -45,6 +48,24 @@ module alu #(
                     y = sub_full[WIDTH-1:0];
                     carry=sub_full[WIDTH];
                     overflow = sub_ovf;
+                end
+            OP_AND:
+                begin
+                    y = a & b;
+                    carry = 1'b0;
+                    overflow = 1'b0;
+                end
+            OP_OR:
+                begin
+                    y = a | b;
+                    carry = 1'b0;
+                    overflow = 1'b0;
+                end
+            OP_XOR:
+                begin
+                    y = a ^ b;
+                    carry = 1'b0;
+                    overflow = 1'b0;
                 end
             default: 
                 begin
