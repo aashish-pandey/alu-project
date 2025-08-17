@@ -37,7 +37,7 @@ module alu #(
             OP_ADD: 
                 begin
                     y = add_full[WIDTH-1:0];
-                    carry = add_full[width];
+                    carry = add_full[WIDTH];
                     overflow = add_ovf;
                 end
             OP_SUB:
