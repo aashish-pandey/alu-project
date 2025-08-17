@@ -63,13 +63,6 @@ ALU_PROJECT/
    gtkwave runs/addsub_waves.vcd
    ```
 
----
-
-## Next Steps
-- Add comparison operations (SLT, SLTU).
-- Integrate simple random testing.
-- **Synthesis**: push RTL through Yosys/OpenROAD with sky130 to generate timing/area reports.
-- Compare ripple-carry adder vs. carry-lookahead version for Fmax/area trade-offs.
 
 ---
 

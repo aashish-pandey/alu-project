@@ -1,0 +1,3 @@
+Quick smoke synthesis:
+    #from project root
+        yosys -p 'read_verilog rtl/alu.v; synth -top alu; stat; write_json runs/alu.json; write_verilog runs/alu_netlist.v'
