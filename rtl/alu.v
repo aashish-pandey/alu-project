@@ -20,6 +20,9 @@ module alu #(
     localparam OP_AND = 4'h2;
     localparam OP_OR = 4'h3;
     localparam OP_XOR = 4'h4;
+    localparam OP_SLL = 4'h5;
+    localparam OP_SRL = 4'h6;
+    localparam OP_SRA = 4'h7;
 
     // precompute add/sub results and overflow bits
     wire [WIDTH:0] add_full = {1'b0, a} + {1'b0, b}; //WIDTH+1 to capture the carry-out
@@ -27,6 +30,17 @@ module alu #(
 
     wire add_ovf = (a[WIDTH-1] == b[WIDTH-1]) && (a[WIDTH-1] != add_full[WIDTH-1]);
     wire sub_ovf = (a[WIDTH-1] != b[WIDTH-1]) && (a[WIDTH-1] != sub_full[WIDTH-1]);
+
+
+    //Masking the shift amount to legal range so synthesis does not infer giant shifters
+    localparam SH = (WIDTH <= 2)? 1:
+                    (WIDTH <= 4)? 2:
+                    (WIDTH <= 8)? 3:
+                    (WIDTH <= 16)? 4:
+                    (WIDTH <= 32)? 5:
+                    (WIDTH <= 64)? 6: 7; //simple fallback
+                
+    wire[SH-1:0] shamt = b[SH-1:0];
 
     always @ * 
     begin
@@ -64,6 +78,24 @@ module alu #(
             OP_XOR:
                 begin
                     y = a ^ b;
+                    carry = 1'b0;
+                    overflow = 1'b0;
+                end
+            OP_SLL:
+                begin
+                    y = a << shamt;
+                    carry = 1'b0;
+                    overflow = 1'b0;
+                end 
+            OP_SRL:
+                begin
+                    y = a >> shamt;
+                    carry = 1'b0;
+                    overflow = 1'b0;
+                end
+            OP_SRA:
+                begin
+                    y = $signed(a) >>> shamt;
                     carry = 1'b0;
                     overflow = 1'b0;
                 end
